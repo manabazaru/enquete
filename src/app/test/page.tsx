@@ -1,7 +1,6 @@
 'use client';
 // app/test/page.tsx
 import React from 'react';
-import AnswerStateGrid from '@/components/data/elements/AnswerStateGrid';
 import DownloadableChart from '@/components/data/parts/DownloadableChart';
 import DataCardGroup from '@/components/data/parts/ResponseStateCard';
 import { Box } from '@mui/material';

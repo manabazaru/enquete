@@ -122,6 +122,7 @@ const ResultCard = (
 
     const additionalContent = ( 
         <Box>
+            {questionType!='自由記述' &&
             <Accordion>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
@@ -131,7 +132,7 @@ const ResultCard = (
                 <AccordionDetails>
                      <ChoiceList choicesList={choicesList}/>
                 </AccordionDetails>
-            </Accordion>
+            </Accordion>}
             <Accordion>
                 <AccordionSummary
                     expandIcon={<ExpandMoreIcon />}
