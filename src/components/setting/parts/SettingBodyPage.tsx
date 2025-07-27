@@ -25,6 +25,7 @@ const SettingBodyPage = (
     const [showUpdateModal, setShowUpdateModal] = useState(false);
     const [deptText, setDeptText] = useState('');
     const [displayText, setDisplayText] = useState('');
+    const [showAdminModal, setShowAdminModal] = useState(false);
 
     const onClickAddibleButton = () => {
         setDisplayText(deptText);
@@ -56,6 +57,14 @@ const SettingBodyPage = (
         variant : 'contained',
         color   : 'error',
         size    : 'large'
+    };
+
+    const addAdminButtonProp: NormalButtonProp = {
+        label   : '管理者を追加',
+        onClick : () => setShowAdminModal(true),
+        variant : 'contained',
+        color   : 'info',
+        size    : 'medium'
     };
 
     const modalContent = (
@@ -112,7 +121,7 @@ const SettingBodyPage = (
                             <AddibleTextField options={deptList}
                                               placeholder='事業部名'
                                               text={deptText}
-                                              onClick={() => onClickAddibleButton}
+                                              onClick={onClickAddibleButton}
                                               onChange={setDeptText}
                             />
                         </Box>
@@ -127,8 +136,19 @@ const SettingBodyPage = (
                         アンケート管理者設定
                     </Typography>
                     <MyDivider/>
-                    <Box>
-                        コンテンツ予定地
+                    <Box sx={{display: 'flex', gap: 2}} alignItems='center'>
+                        <Box>
+                            <Typography variant='h6'>現在の管理者</Typography>
+                        </Box>
+                        <Box>
+                            <NormalButton 
+                                onClick={addAdminButtonProp.onClick}
+                                label={addAdminButtonProp.label}
+                                variant={addAdminButtonProp.variant}
+                                color={addAdminButtonProp.color}
+                                size={addAdminButtonProp.size}
+                            />
+                        </Box>
                     </Box>
                 </Grid>
 

@@ -27,6 +27,8 @@ const AddibleTextField = (
                 onInputChange={(_, newValue) => onChange(newValue)}         
                 renderInput={(params) => (
                 <TextField
+                    value={text}
+                    onChange={e => onChange(e.target.value)}
                     {...params}
                     variant='standard'   
                     placeholder={placeholder}       
