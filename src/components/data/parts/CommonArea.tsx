@@ -1,7 +1,6 @@
-// CommonArea.tsx
-import React from 'react'
-import { Box, Grid, Card, Typography } from '@mui/material'
-import Checkboxes from '@/components/data/elements/Checkboxes'
+import React from 'react';
+import { Box, Grid, Card, Typography } from '@mui/material';
+import Checkboxes from '@/components/data/elements/Checkboxes';
 import CommonGrid from '@/components/data/elements/CommonGrid';
 import { DeptResponseStateProp } from '@/components/data/parts/ResponseStateCard';
 import DownloadableChart from '@/components/data/parts/DownloadableChart';
