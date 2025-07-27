@@ -54,7 +54,7 @@ const ChartComponent: React.FC<ChartComponentProps> = ({
         colors: {
             forceOverride: true,
         },
-        legend: { position: 'top' },
+        legend: { display: false },
         title: { display: !!title, text: title },
       },
     }

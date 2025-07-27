@@ -34,15 +34,17 @@ const DataPageBody = ({ enqueteName, deptProps, questionProps }: DataBodyProps )
     // チェックボックスが選択されている事業部の回答データを取得
     const getCheckedDeptAnswerProps = (checkedState) => {
         const ansProps: AnswerProp[] = [];
-        for(let i=0; i < deptProps.length ; i++){
-            if(checkedState[i]){
-                const ansProp : AnswerProp = { userAnsProps:[] };
-                deptProps[i].answers.map((ans) => (
+        for(let questionIdx=0 ; questionIdx < questionProps.length ; questionIdx++){
+            const ansProp : AnswerProp = { userAnsProps:[] };
+            ansProps.push(ansProp);
+        }
+        for(let deptIdx=0; deptIdx < deptProps.length ; deptIdx++){
+            if(checkedState[deptIdx]){
+                deptProps[deptIdx].answers.map((ans: AnswerProp, questionIdx) => (
                     ans.userAnsProps.map((userAnsProp) => {
-                        ansProp.userAnsProps.push(userAnsProp)
+                        ansProps[questionIdx].userAnsProps.push(userAnsProp)
                     })
                 ));
-                ansProps.push(ansProp);
             }
         }
         return ansProps;
@@ -72,31 +74,35 @@ const DataPageBody = ({ enqueteName, deptProps, questionProps }: DataBodyProps )
     };
 
     // チェックボックスの状態に応じて resultCardGroupProps を更新
-    const updateResultCardGroupProps = () => {
-        // チェックボックスが選択されている事業部の回答データを抽出
-        const ansProps: AnswerProp[] = getCheckedDeptAnswerProps(checkedState);
+    // const updateResultCardGroupProps = () => {
+    //     // チェックボックスが選択されている事業部の回答データを抽出
+    //     const ansProps: AnswerProp[] = getCheckedDeptAnswerProps(checkedState);
 
-         // 各設問の回答データをすべて削除し, 新しいデータを挿入
-        for(let questionIdx=0 ; questionIdx < questionProps.length ; questionIdx++){
-            resultCardGroupProps.resultProps[questionIdx].userAnsProps.splice(0);
-            ansProps[questionIdx].userAnsProps.map((userAnsProp) => (
-                resultCardGroupProps.resultProps[questionIdx].userAnsProps.push(userAnsProp)
-            ));
-        }      
-    }
+    //      // 各設問の回答データをすべて削除し, 新しいデータを挿入
+    //     for(let questionIdx=0 ; questionIdx < questionProps.length ; questionIdx++){
+    //         resultCardGroupProps.resultProps[questionIdx].userAnsProps.splice(0);
+    //         ansProps[questionIdx].userAnsProps.map((userAnsProp) => (
+    //             resultCardGroupProps.resultProps[questionIdx].userAnsProps.push(userAnsProp)
+    //         ));
+    //     }      
+    // }
 
     // 回答状況用 Prop, 共通部分用 Prop の処理
     const deptResponseStateProps : DeptResponseStateProp[] = [];        // 回答状況用
     const totalDeptResponseStateProps : DeptResponseStateProp[] = [];   // 共通用
-    for(let prop of deptProps){
-        const deptResopnseStateProp  : DeptResponseStateProp = {
+
+    for(let deptIdx=0 ; deptIdx < deptProps.length ; deptIdx++){
+        const prop = deptProps[deptIdx];
+        const deptResponseStateProp : DeptResponseStateProp = {
             deptName        : prop.deptName,
             esqIdList       : prop.esqIdList,
             nameList        : prop.nameList,
             hasResponseList : prop.hasResponseList
-        };
-        deptResponseStateProps.push(deptResopnseStateProp);
-        totalDeptResponseStateProps.push(deptResopnseStateProp);
+        }
+        if(checkedState[deptIdx]){
+            deptResponseStateProps.push(deptResponseStateProp);
+        }
+        totalDeptResponseStateProps.push(deptResponseStateProp);
     }
 
     // 回答状況用 Prop の初期化
@@ -106,21 +112,22 @@ const DataPageBody = ({ enqueteName, deptProps, questionProps }: DataBodyProps )
     }
 
     // チェックボックスの状態に応じて resultCardGroupProps を変化
-    const updateResponseStateCardGroupProps = () => {
-        responseStateCardGroupProps.deptResponseStateProps.splice(0);
-        for(let deptIdx=0 ; deptIdx < deptProps.length ; deptIdx++){
-            if(checkedState[deptIdx]){
-                const prop = deptProps[deptIdx];
-                const newDeptResponseStateProp : DeptResponseStateProp = {
-                    deptName        : prop.deptName,
-                    esqIdList       : prop.esqIdList,
-                    nameList        : prop.nameList,
-                    hasResponseList : prop.hasResponseList
-                }
-                responseStateCardGroupProps.deptResponseStateProps.push(newDeptResponseStateProp);
-            }
-        }
-    }
+    // const updateResponseStateCardGroupProps = () => {
+    //     responseStateCardGroupProps.deptResponseStateProps.splice(0);
+    //     console.log(responseStateCardGroupProps.deptResponseStateProps);
+    //     for(let deptIdx=0 ; deptIdx < deptProps.length ; deptIdx++){
+    //         if(checkedState[deptIdx]){
+    //             const prop = deptProps[deptIdx];
+    //             const newDeptResponseStateProp : DeptResponseStateProp = {
+    //                 deptName        : prop.deptName,
+    //                 esqIdList       : prop.esqIdList,
+    //                 nameList        : prop.nameList,
+    //                 hasResponseList : prop.hasResponseList
+    //             }
+    //             responseStateCardGroupProps.deptResponseStateProps.push(newDeptResponseStateProp);
+    //         }
+    //     }
+    // }
 
     // checkboxes の処理記述
     const [snackBarOpen, setSnackBarOpen] = useState(false);
@@ -137,8 +144,8 @@ const DataPageBody = ({ enqueteName, deptProps, questionProps }: DataBodyProps )
         newState[index] = isChecked;
         setCheckedState(newState);
         // 回答結果, 回答状況の更新
-        updateResultCardGroupProps();
-        updateResponseStateCardGroupProps();
+        // updateResultCardGroupProps();
+        // updateResponseStateCardGroupProps();
     };
 
     // 共通部分用 Prop の初期化
@@ -191,7 +198,7 @@ const DataPageBody = ({ enqueteName, deptProps, questionProps }: DataBodyProps )
                 setOpen={setSnackBarOpen} 
                 message='操作が無効です。1つ以上のチェックボックスを選択してください。'
                 />
-            <CommonArea
+            <CommonArea 
                 deptResponseStateProps={commonAreaProps.deptResponseStateProps}
                 enqueteName={commonAreaProps.enqueteName}
                 checkedState={commonAreaProps.checkedState}

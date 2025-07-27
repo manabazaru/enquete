@@ -2,6 +2,8 @@ import DataCard from '@/components/data/elements/DataCard';
 import DownloadableChart from '@/components/data/parts/DownloadableChart';
 import ResponseStateGrid from '@/components/data/elements/ResponseStateGrid';
 import ResponseStateTable, { ResponseStateRow } from '@/components/data/elements/ResponseStateTable';
+import { Accordion, AccordionDetails, AccordionSummary, Typography } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 export interface DeptResponseStateProp {
     deptName         : string;
@@ -38,8 +40,6 @@ const ResponseStateCard = ({ enqueteName,
                                     type='pie'
                                     fileName={fileName}
                                     height={300}
-                                    top={20}
-                                    right={20}
                                 />
     
     const overviewContent = (
@@ -63,7 +63,19 @@ const ResponseStateCard = ({ enqueteName,
         };
         rows.push(row);
     }
-    const additionalContent = ( <ResponseStateTable rows={rows}/>);
+    const additionalContent = ( 
+            <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls='panel1-content'>
+                    <Typography component="span">選択肢リスト</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                     <ResponseStateTable rows={rows}/>
+                </AccordionDetails>
+            </Accordion>
+
+    );
     const popupTitle = '詳細: ' + deptName;
 
     return (

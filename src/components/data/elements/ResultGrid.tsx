@@ -17,7 +17,7 @@ const ResultGrid = (
     { questionNo, isNecessary, questionText, questionSubtext, answerNum, chart=false } : ResultGridProp
 ) => {
     const hasChart = Boolean(chart);
-    const chartSize = 2;
+    const chartSize = 6;
     const textSize = hasChart ? 6 : 6+chartSize;
 
   return (
@@ -37,7 +37,7 @@ const ResultGrid = (
             </Typography>
           </Grid>
           {hasChart && (
-          <Grid size={{xs:chartSize}} alignItems='center'>
+          <Grid size={{xs:4}} alignItems='center'>
             <Box sx={{width: "100%", 
                       height: "100%", 
                       display: "flex", 

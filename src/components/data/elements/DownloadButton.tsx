@@ -4,6 +4,8 @@ import IconButton from '@mui/material/IconButton';
 import dynamic from "next/dynamic";
 import html2canvas from "html2canvas";
 import DownloadIcon from '@mui/icons-material/Download';
+import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
+import { Fab } from "@mui/material";
 
 export interface DownloadButtonProp{
     chartRef: React.RefObject<HTMLDivElement>;
@@ -23,12 +25,13 @@ const DownloadImage = ({ chartRef, fileName } : DownloadButtonProp) => {
     };
 
     return (
-        <IconButton 
+        <Fab 
             size="small"
             className="position-absolute top-0 end-0 m-1"
+            color='primary'
             onClick={handleDownload}>
-                <DownloadIcon fontSize="small"/>
-            </IconButton>
+                <FileDownloadOutlinedIcon fontSize="small"/>
+            </Fab>
     );
 }
 

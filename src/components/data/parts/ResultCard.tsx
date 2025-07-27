@@ -2,6 +2,9 @@ import DataCard from '@/components/data/elements/DataCard';
 import DownloadableChart from '@/components/data/parts/DownloadableChart';
 import ResultGrid, { BasicQuestionProp } from '@/components/data/elements/ResultGrid';
 import ResultTable, { ResultRow } from '@/components/data/elements/ResultTable';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Typography } from '@mui/material';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChoiceList from '@/components/data/elements/ChoiceList';
 
 
 export interface UserAnsProp {
@@ -80,8 +83,6 @@ const ResultCard = (
                                     type={chartType}
                                     fileName={fileName}
                                     height={300}
-                                    top={20}
-                                    right={20}
                                 />
             overviewContent = (
                 <div style={{ padding: 12 }}>
@@ -99,6 +100,12 @@ const ResultCard = (
 
     const rows : ResultRow[] = [];
     for(let prop of userAnsProps){
+        let ansText: string = prop.ansList.join('\n');
+        // 選択方式の回答加工 (choicesListの番号からテキストを取得)
+        if(questionType == '単一選択' || questionType =='複数選択'){
+            const ansTextList: string[] = prop.ansList.map((choiceIdx) => {return choicesList[choiceIdx]});
+            ansText = ansTextList.join(', ');
+        }
         const row : ResultRow = {
             esqId  : prop.esqId,
             name   : prop.name,
@@ -108,12 +115,35 @@ const ResultCard = (
          - 複数選択の場合, 選択肢の文字列を羅列し, 間に改行を挿入
          - 自由記述の場合, 解答をそのまま表示
          */
-            ansText: prop.ansList.join('\n')
+            ansText: ansText
         };
         rows.push(row);
     }
 
-    const additionalContent = ( <ResultTable rows={rows}/>);
+    const additionalContent = ( 
+        <Box>
+            <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls='panel1-content'>
+                    <Typography component="span">選択肢リスト</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                     <ChoiceList choicesList={choicesList}/>
+                </AccordionDetails>
+            </Accordion>
+            <Accordion>
+                <AccordionSummary
+                    expandIcon={<ExpandMoreIcon />}
+                    aria-controls='panel1-content'>
+                    <Typography component="span">回答詳細</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                     <ResultTable rows={rows}/>
+                </AccordionDetails>
+            </Accordion>
+        </Box>
+    );
     const popupTitle = 'Q. ' + questionNo;
 
     return (

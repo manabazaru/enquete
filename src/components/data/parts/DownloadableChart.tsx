@@ -8,8 +8,6 @@ import { useRef } from 'react';
 export interface DownloadableChartProps extends ChartComponentProps{
     fileName: string;
     height? : number;
-    top?    : number;
-    right?  : number;
 };
 
 const DownloadableChart = ({fileName, 
@@ -17,11 +15,11 @@ const DownloadableChart = ({fileName,
                             values, 
                             type, 
                             title, 
-                            height=200, 
-                            top=30, 
-                            right=40}: DownloadableChartProps
+                            height=200 }: DownloadableChartProps
 ) => {
     const chartRef = useRef<HTMLDivElement>(null);
+    const top = type == 'pie' ? 30 : 10;
+    const right = type == 'pie' ? 5 : 10;
     return (
         <Box sx={{position: 'relative'}}>
             <Box ref={chartRef} sx={{width: '100%', height}}>

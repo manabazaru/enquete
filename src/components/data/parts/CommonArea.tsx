@@ -1,6 +1,6 @@
 // CommonArea.tsx
 import React from 'react'
-import { Box, Grid, Card } from '@mui/material'
+import { Box, Grid, Card, Typography } from '@mui/material'
 import Checkboxes from '@/components/data/elements/Checkboxes'
 import CommonGrid from '@/components/data/elements/CommonGrid';
 import { DeptResponseStateProp } from '@/components/data/parts/ResponseStateCard';
@@ -45,12 +45,10 @@ const CommonArea = ({
                                   type='pie'
                                   fileName={fileName}
                                   height={300}
-                                  top={20}
-                                  right={20}
                               />
 
   return (
-    <Box sx={{borderRadius: 2, p: 2,  maxWidth:1000, mx:'auto'}}>
+    <Box sx={{borderRadius: 2, p: 2,  maxWidth:1000, minWidth: 700, mx:'auto'}}>
       <Grid
         container
         spacing={2}
@@ -58,6 +56,11 @@ const CommonArea = ({
         alignItems='center'
         maxWidth='1000px'
       >
+        <Grid>
+          <Typography variant="h3" gutterBottom>
+            {enqueteName}
+          </Typography>
+        </Grid>
         <Grid>
           <Card sx={{ boxShadow: 'none', width: '100%' }}>
             <CommonGrid

@@ -17,12 +17,12 @@ export interface ResultTableProps{
 }
 
 const ResultTable = (
-    {rows, height=400, page=0, pageSize=5}: ResultTableProps
+    {rows, height=370, page=0, pageSize=5}: ResultTableProps
 ) => {
 
     // 回答コピーアイコン用の処理
     const renderCell = (params) => (
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
+            <Box sx={{ display: 'flex', alignItems: 'center', height: '100%' }}>
                 <IconButton
                 size="small"
                 onClick={() => {

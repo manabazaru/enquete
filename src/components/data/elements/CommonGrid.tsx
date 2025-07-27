@@ -44,7 +44,7 @@ const CommonGrid = ({
                       display: "flex", 
                       justifyContent: "center",
                       alignItems: "center",
-                      pr: 20}}>
+                      pl: 10}}>
                       {chart}
                     </Box>
           </Grid>  

@@ -15,7 +15,7 @@ export interface ResponseStateTableProps{
 }
 
 const ResponseStateTable = (
-    {rows, height=400, page=0, pageSize=5}: ResponseStateTableProps
+    {rows, height=370, page=0, pageSize=5}: ResponseStateTableProps
 ) => {
 
     const columns: GridColDef[] = [

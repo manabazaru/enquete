@@ -19,9 +19,16 @@ interface CardWrapperProps {
 const CardWrapper = styled('div', {
   shouldForwardProp: (prop) => prop !== 'animate',
 })<CardWrapperProps>(({ theme, animate }) => ({
-  display: 'inline-block',
-  maxWidth: 550,
-  margin: theme.spacing(0.5),
+  // display: 'inline-block',
+  // maxWidth: 550,
+  // display : 'block',
+  // width: '100%',
+  // maxWidth: '100%',
+   display: 'flex',           // ← フレックスにして
+   flexDirection: 'column',   // ← 縦並び
+   width: '100%',
+   height: '100%',            // ← 親の高さを満たす
+   margin: theme.spacing(0.5),
   opacity: animate ? 1 : 0,
   transform: animate ? 'translateY(0)' : 'translateY(20px)',
   transition: 'all 0.4s ease',
@@ -30,6 +37,7 @@ const CardWrapper = styled('div', {
 // Card 本体のスタイル（余白・角丸・ホバー）
 const StyledCard = styled(Card)(({ theme }) => ({
   width: '100%',
+  flexGrow: 1,
   borderRadius: theme.shape.borderRadius,
   padding: theme.spacing(3),
   cursor: 'pointer',

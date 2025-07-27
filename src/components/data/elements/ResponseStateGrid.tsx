@@ -37,7 +37,7 @@ const ResponseStateGrid = ({
                       display: "flex", 
                       justifyContent: "center",
                       alignItems: "center",
-                      pl: 15}}>
+                      pl: 5 }}>
                       {chart}
                     </Box>
           </Grid>  
